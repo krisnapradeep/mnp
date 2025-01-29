@@ -29,13 +29,23 @@ interface LinkItemProps {
 const LinkItems: Array<LinkItemProps> = [
     { name: 'Dashboard', icon: FiHome, path: '/admin/default' },
     { name: 'Reports', icon: FiTrendingUp, path: '/admin/data-tables' },
-    { name: 'Profile', icon: FiStar, path: '/admin/profile' },
-    { name: 'Settings', icon: FiSettings, path: '/admin/settings' },
+    // { name: 'Profile', icon: FiStar, path: '/admin/profile' },
+    
 ];
 
 const MasterItems: Array<LinkItemProps> = [
     { name: 'User Types', icon: FiStar, path: '/master/user-types' },
     { name: 'Beneficiaries', icon: FiStar, path: '/master/beneficiaries' },
+    { name: 'Settings', icon: FiSettings, path: '/admin/settings' },
+    { name: 'Articles', icon: FiStar, path: '/admin/articles' },
+    { name: 'Article Orders', icon: FiStar, path: '/admin/article-orders' },
+    { name: 'Beneficiaries', icon: FiStar, path: '/admin/beneficiaries' },
+    { name: 'Beneficiary Types', icon: FiStar, path: '/admin/beneficiary-types' },
+    { name: 'Categories', icon: FiStar, path: '/admin/categories' },
+    { name: 'Districts', icon: FiStar, path: '/admin/districts' },
+    { name: 'Suppliers', icon: FiStar, path: '/admin/suppliers' },
+    { name: 'Supplier Payments', icon: FiStar, path: '/admin/supplier-payments' },
+    { name: 'Year Master', icon: FiStar, path: '/admin/year-master' },
 ];
 
 const TransactionItems: Array<LinkItemProps> = [
@@ -54,18 +64,20 @@ export default function Sidebar({ onClose, ...rest }: SidebarProps) {
 
     return (
         <Box
+            as="aside"
             transition="3s ease"
             bg={useColorModeValue('white', 'gray.900')}
             borderRight="1px"
             borderRightColor={useColorModeValue('gray.200', 'gray.700')}
-            w={{ base: 'full', md: 60 }}
+            w={{ base: 'full', md: '250px' }}
             pos="fixed"
             h="full"
+            overflowY="auto"
             {...rest}
         >
             <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
                 <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-                    Logo
+                    MNP
                 </Text>
             </Flex>
             {LinkItems.map((link) => (

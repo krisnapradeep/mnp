@@ -1,21 +1,16 @@
 const mongoose = require('mongoose');
 
 const beneficiaryListSchema = new mongoose.Schema({
-    beneficiaryId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        unique: true,
-        index: true,
-        auto:true
-    },
+
+
     beneficiaryTypeId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'BeneficiaryType',
         required: true
     },
-    districtId: {
+    yearId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'District',
+        ref: 'Year',
         required: true
     },
     articleId: {
@@ -23,10 +18,15 @@ const beneficiaryListSchema = new mongoose.Schema({
         ref: 'Article',
         required: true
     },
-    yearId: {
+    districtId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'YearMaster',
-        required: true
+        ref: 'District',
+        required: false
+    },
+    beneficiaryId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Beneficiary',
+        required: false
     },
     quantity: {
         type: Number,
@@ -34,11 +34,11 @@ const beneficiaryListSchema = new mongoose.Schema({
     },
     unitCost: {
         type: Number,
-        required: true
+        required: false
     },
     totalCost: {
         type: Number,
-        required: true
+        required: false
     },
     isOrderPlaced: {
         type: Boolean,
@@ -46,13 +46,15 @@ const beneficiaryListSchema = new mongoose.Schema({
     },
     orderId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'ArticleOrder'
+        ref: 'ArticleOrder',
+        required: false
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
-    modifiedBy: {
+    updatedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
@@ -62,5 +64,5 @@ const beneficiaryListSchema = new mongoose.Schema({
         updatedAt: 'modifiedOn'
     }
 });
-
-module.exports = mongoose.model('BeneficiaryList', beneficiaryListSchema);
+const collectionName = 'beneficiarylist';
+module.exports = mongoose.model('BeneficiaryList', beneficiaryListSchema, collectionName);

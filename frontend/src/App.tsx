@@ -8,15 +8,16 @@ import SignIn from './pages/auth/SignIn';
 import Dashboard from './pages/admin/Dashboard';
 import DataTables from './pages/admin/DataTables';
 import Profile from './pages/admin/Profile';
-import UserTypeList from './pages/UserTypeList.js';
+import UserTypeList from './pages/master/UserTypeList';
 import UserTypeForm from './pages/UserTypeForm.js';
-import YearMaster from './pages/admin/YearMaster.js';
-import BeneficiaryType from './pages/admin/BeneficiaryType.js';
-import District from './pages/admin/District.js';
-import Category from './pages/admin/Category.js';
-import Supplier from './pages/admin/Supplier.js';
-import SupplierPayment from './pages/admin/SupplierPayment.js';
-import ArticleOrder from './pages/admin/ArticleOrder.js';
+import YearMaster from './pages/admin/YearMaster';
+import BeneficiaryType from './pages/admin/BeneficiaryType';
+import District from './pages/admin/District';
+import Category from './pages/admin/Category';
+import Supplier from './pages/admin/Supplier';
+import SupplierPayment from './pages/admin/SupplierPayment';
+import ArticleOrder from './pages/admin/ArticleOrder';
+import BeneficiaryList from './pages/transaction/BeneficiaryList';
 
 // Components
 import Layout from './components/layout/Layout';
@@ -112,7 +113,8 @@ function App() {
                                 </PrivateRouteWrapper>
                             }
                         />
-
+                        <Route path="/master/user-types" element={<PrivateRouteWrapper path="/master/user-types"><UserTypeList /></PrivateRouteWrapper>} />
+                        <Route path="/transaction/beneficiary-list" element={<PrivateRouteWrapper path="/transaction/beneficiary-list"><BeneficiaryList /></PrivateRouteWrapper>} />
                         <Route
                             path="/"
                             element={<Navigate to="/auth/sign-in" replace />}

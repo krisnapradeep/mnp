@@ -21,22 +21,15 @@ const userSchema = new mongoose.Schema({
         minlength: 8,
         select: false
     },
-    role: {
-        type: String,
-        enum: ['user', 'admin'],
+    userType: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'UserType',
+        required: [true, 'Please provide a user type'],
         default: 'user'
     },
     profileImage: {
         type: String,
         default: 'default.jpg'
-    },
-    position: {
-        type: String,
-        default: 'User'
-    },
-    department: {
-        type: String,
-        default: 'General'
     },
     passwordChangedAt: Date,
     passwordResetToken: String,
@@ -77,6 +70,6 @@ userSchema.methods.correctPassword = async function(candidatePassword, userPassw
         return false;
     }
 };
-
-const User = mongoose.model('User', userSchema);
+const collectionName = 'users';
+const User = mongoose.model('User', userSchema, collectionName);
 module.exports = User;

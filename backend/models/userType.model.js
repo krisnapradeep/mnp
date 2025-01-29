@@ -19,9 +19,9 @@ const userTypeSchema = new mongoose.Schema({
     },
     createdBy: String,
     createdOn: { type: Date, default: Date.now },
-    modifiedBy: String,
+    updatedBy: String,
     modifiedOn: Date
 });
-
-const UserType = mongoose.model('UserType', userTypeSchema);
+const collectionName = 'usertype';
+const UserType = mongoose.model('UserType', userTypeSchema, collectionName);
 module.exports = UserType;

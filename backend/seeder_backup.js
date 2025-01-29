@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const User = require('./models/user.model');
 const UserType = require('./models/userType.model');
-const YearMaster = require('./models/yearMaster.model');
+const Year = require('./models/year.model');
 const BeneficiaryType = require('./models/beneficiaryType.model');
 const Beneficiary = require('./models/beneficiary.model');
 const District = require('./models/district.model');
@@ -31,7 +31,7 @@ const connectDB = async () => {
 const seedData = async () => {
     await connectDB();
     await mongoose.connection.collection('usertypes').drop();
-    await mongoose.connection.collection('yearmasters').drop();
+    await mongoose.connection.collection('Years').drop();
     await mongoose.connection.collection('beneficiarytypes').drop();
     await mongoose.connection.collection('beneficiaries').drop();
     await mongoose.connection.collection('districts').drop();
@@ -46,7 +46,7 @@ const seedData = async () => {
     
     await UserType.deleteMany();
     //await User.deleteMany();
-    await YearMaster.deleteMany();
+    await Year.deleteMany();
     await BeneficiaryType.deleteMany();
     await Beneficiary.deleteMany();
     await District.deleteMany();
@@ -60,7 +60,7 @@ const seedData = async () => {
     // Sample data
     const userTypes = [{ userType: 'admin', isActive: true }, { userType: 'user', isActive: true }];
     //const users = [{ name: 'Admin', email: 'admin@example.com', password: 'password', userTypeId: 'admin' }];
-    const yearMasters = [{ year: 2025, isCurrent: true, isActive: true }];
+    const Years = [{ year: 2025, isCurrent: true, isActive: true }];
     const beneficiaryTypes = [{ beneficiaryType: 'Type A', isActive: true }];
     const beneficiaries = [{ name: 'John Doe', uniqueId: '12345', yearId: '2025' }];
     const districts = [{ districtName: 'District 1', head: 'Head 1', contactNo: '1234567890' }];
@@ -74,7 +74,7 @@ const seedData = async () => {
     // Insert data
     await UserType.insertMany(userTypes);
     //await User.insertMany(users);
-    await YearMaster.insertMany(yearMasters);
+    await Year.insertMany(Years);
     await BeneficiaryType.insertMany(beneficiaryTypes);
     await Beneficiary.insertMany(beneficiaries);
     await District.insertMany(districts);

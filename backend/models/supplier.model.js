@@ -1,40 +1,38 @@
 const mongoose = require('mongoose');
 
 const supplierSchema = new mongoose.Schema({
-  supplierId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    unique: true,
-    index: true,
-    auto:true
-  },
+
   name: {
     type: String,
     required: true
   },
   contactNo: {
     type: String,
-    required: true
+    required: false
   },
   address: {
     type: String,
-    required: true
+    required: false
   },
   bankAccountName: {
     type: String,
-    required: true
+    required: false
   },
   bankAccountNo: {
     type: String,
-    required: true
+    required: false
   },
   bankAccountIFSC: {
     type: String,
-    required: true
+    required: false
   },
-  isDefault: {
-    type: Boolean,
-    default: false
+  gstNo: {
+    type: String,
+    required: false
+  },
+  panNo: {
+    type: String,
+    required: false
   },
   isActive: {
     type: Boolean,
@@ -42,9 +40,10 @@ const supplierSchema = new mongoose.Schema({
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true
   },
-  modifiedBy: {
+  updatedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }
@@ -54,5 +53,5 @@ const supplierSchema = new mongoose.Schema({
     updatedAt: 'modifiedOn'
   }
 });
-
-module.exports = mongoose.model('Supplier', supplierSchema);
+const collectionName = 'supplier';
+module.exports = mongoose.model('Supplier', supplierSchema, collectionName);

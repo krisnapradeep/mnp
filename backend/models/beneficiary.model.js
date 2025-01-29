@@ -1,13 +1,7 @@
 const mongoose = require('mongoose');
 
 const beneficiarySchema = new mongoose.Schema({
-  beneficiaryId: {
-    type: Number,
-    required: true,
-    unique: true,
-    index: true,
-    auto:true
-  },
+
   name: {
     type: String,
     required: true
@@ -19,22 +13,23 @@ const beneficiarySchema = new mongoose.Schema({
   },
   yearId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'YearMaster',
+    ref: 'Year',
     required: true
   },
   benefiedItemId: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true
+    required: false
   },
   benefiedItem: {
     type: String,
-    required: true
+    required: false
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  },
-  modifiedBy: {
+    ref: 'User',
+    required: true  
+},
+  updatedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }
@@ -44,5 +39,5 @@ const beneficiarySchema = new mongoose.Schema({
     updatedAt: 'modifiedOn'
   }
 });
-
-module.exports = mongoose.model('Beneficiary', beneficiarySchema);
+const collectionName = 'beneficiary';
+module.exports = mongoose.model('Beneficiary', beneficiarySchema, collectionName);

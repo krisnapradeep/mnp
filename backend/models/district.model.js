@@ -1,13 +1,7 @@
 const mongoose = require('mongoose');
 
-const districtSchema = new mongoose.Schema({  
-  districtId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    unique: true,
-    index: true,
-    auto:true
-  },
+const districtSchema = new mongoose.Schema({
+
   districtName: {
     type: String,
     required: true,
@@ -15,19 +9,19 @@ const districtSchema = new mongoose.Schema({
   },
   head: {
     type: String,
-    required: true
+    required: false
   },
   contactNo: {
     type: String,
-    required: true
+    required: false
   },
   emailId: {
     type: String,
-    required: true
+    required: false
   },
   communicationAddress: {
     type: String,
-    required: true
+    required: false
   },
   notes: String,
   isActive: {
@@ -36,9 +30,10 @@ const districtSchema = new mongoose.Schema({
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true
   },
-  modifiedBy: {
+  updatedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }
@@ -48,5 +43,5 @@ const districtSchema = new mongoose.Schema({
     updatedAt: 'modifiedOn'
   }
 });
-
-module.exports = mongoose.model('District', districtSchema);
+const collectionName = 'district';
+module.exports = mongoose.model('District', districtSchema, collectionName);

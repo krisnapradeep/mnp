@@ -70,7 +70,7 @@ const Header = () => {
                     fontWeight="bold"
                     color={useColorModeValue('blue.600', 'white')}
                 >
-                    Horizon Admin
+                    மக்கள் நலப்பணி
                 </Text>
 
                 {/* Right Section */}
@@ -124,11 +124,11 @@ const Header = () => {
                             <Avatar
                                 size="sm"
                                 name="John Doe"
-                                src="https://bit.ly/dan-abramov"
+                                src="../../assets/images/profile.jpg"
                             />
                         </MenuButton>
                         <MenuList>
-                            <MenuItem icon={<FiUser />}>Profile</MenuItem>
+                            <MenuItem icon={<FiUser />} onClick={() => navigate('/admin/profile')} >Profile</MenuItem>
                             <MenuItem icon={<FiSettings />}>Settings</MenuItem>
                             <MenuItem
                                 icon={<FiLogOut />}

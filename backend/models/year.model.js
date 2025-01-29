@@ -1,13 +1,6 @@
 const mongoose = require('mongoose');
 
-const yearMasterSchema = new mongoose.Schema({
-  yearMasterId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    unique: true,
-    index: true,
-    auto:true
-  },
+const yearSchema = new mongoose.Schema({
   year: {
     type: Number,
     required: true,
@@ -23,9 +16,10 @@ const yearMasterSchema = new mongoose.Schema({
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true
   },
-  modifiedBy: {
+  updatedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }
@@ -36,4 +30,5 @@ const yearMasterSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('YearMaster', yearMasterSchema);
+const collectionName = 'year';
+module.exports = mongoose.model('Year', yearSchema, collectionName);

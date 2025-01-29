@@ -1,12 +1,7 @@
 const mongoose = require('mongoose');
 
 const articleOrderSchema = new mongoose.Schema({
-    orderId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        index: true,
-        auto:true
-    },
+
     articleId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Article',
@@ -39,9 +34,10 @@ const articleOrderSchema = new mongoose.Schema({
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
-    modifiedBy: {
+    updatedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
@@ -51,5 +47,5 @@ const articleOrderSchema = new mongoose.Schema({
         updatedAt: 'modifiedOn'
     }
 });
-
-module.exports = mongoose.model('ArticleOrder', articleOrderSchema);
+const collectionName = 'articleorder';
+module.exports = mongoose.model('ArticleOrder', articleOrderSchema, collectionName);

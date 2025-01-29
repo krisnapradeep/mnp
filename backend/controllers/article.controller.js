@@ -13,7 +13,10 @@ exports.createArticle = async (req, res) => {
 // Get all Articles
 exports.getAllArticles = async (req, res) => {
     try {
-        const articles = await Article.find();
+        const articles = await Article.find()
+        .populate({path : 'categoryId', select: 'categoryName'})
+        .select('_id articleName categoryId categoryName')
+        .where('isActive').equals(true);
         res.status(200).json({ status: 'success', results: articles.length, data: { articles } });
     } catch (error) {
         res.status(400).json({ status: 'fail', message: error.message });

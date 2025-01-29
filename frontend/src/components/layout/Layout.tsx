@@ -16,6 +16,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <Box
                     ml={{ base: 0, md: 60 }}
                     w="full"
+                    mt="60px"
                 >
                     {children}
                 </Box>

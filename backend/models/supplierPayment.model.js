@@ -1,13 +1,7 @@
 const mongoose = require('mongoose');
 
 const supplierPaymentSchema = new mongoose.Schema({
-    paymentId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        unique: true,
-        index: true,
-        auto:true
-    },
+
     supplierId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Supplier',
@@ -28,9 +22,10 @@ const supplierPaymentSchema = new mongoose.Schema({
     notes: String,
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
-    modifiedBy: {
+    updatedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
@@ -40,5 +35,5 @@ const supplierPaymentSchema = new mongoose.Schema({
         updatedAt: 'modifiedOn'
     }
 });
-
-module.exports = mongoose.model('SupplierPayment', supplierPaymentSchema);
+const collectionName = 'supplierpayment';
+module.exports = mongoose.model('SupplierPayment', supplierPaymentSchema, collectionName);

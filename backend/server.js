@@ -7,6 +7,19 @@ const logger = require('./middleware/logger');
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
 const userTypeRoutes = require('./routes/userType.routes');
+const districtFundsRoutes = require('./routes/districtFunds.routes');
+const reportRoutes = require('./routes/report.routes');
+const yearRoutes = require('./routes/year.routes');
+const districtRoutes = require('./routes/district.routes');
+const supplierRoutes = require('./routes/supplier.routes');
+const categoryRoutes = require('./routes/category.routes');
+const articleOrderRoutes = require('./routes/articleOrder.routes');
+const articleRoutes = require('./routes/article.routes');
+const supplierPaymentRoutes = require('./routes/supplierPayment.routes');
+const beneficiaryRoutes = require('./routes/beneficiary.routes');
+const beneficiaryTypeRoutes = require('./routes/beneficiaryType.routes');
+const beneficiaryListRoutes = require('./routes/beneficiaryList.routes');
+
 
 const app = express();
 
@@ -44,6 +57,18 @@ app.post('/api/test-post', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/usertypes', userTypeRoutes);
+app.use('/api/districtFunds', districtFundsRoutes);
+app.use('/api/reports', reportRoutes);
+app.use('/api/years', yearRoutes);
+app.use('/api/districts', districtRoutes);
+app.use('/api/suppliers', supplierRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/articleOrders', articleOrderRoutes);
+app.use('/api/articles', articleRoutes);
+app.use('/api/supplierPayments', supplierPaymentRoutes);
+app.use('/api/beneficiaries', beneficiaryRoutes);
+app.use('/api/beneficiaryTypes', beneficiaryTypeRoutes);
+app.use('/api/beneficiaryLists', beneficiaryListRoutes);
 
 // Use logger middleware
 app.use(logger);
