@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
-import axios from 'axios';
+import { axiosInstance } from '../../../config/config';
 
 const BeneficiaryForm: React.FC<{ visible: boolean; onCancel: () => void; onSuccess: () => void; record?: any; }> = ({ visible, onCancel, onSuccess, record }) => {
     const [name, setName] = useState('');
@@ -24,10 +24,10 @@ const BeneficiaryForm: React.FC<{ visible: boolean; onCancel: () => void; onSucc
         e.preventDefault();
         try {
             if (record) {
-                await axios.put(`/api/beneficiary/${record.beneficiaryId}`, { name, contactNo, address });
+                await axiosInstance.put(`/beneficiary/${record.beneficiaryId}`, { name, contactNo, address });
                 toast({ title: 'Beneficiary updated', status: 'success' });
             } else {
-                await axios.post('/api/beneficiary', { name, contactNo, address });
+                await axiosInstance.post('/beneficiary', { name, contactNo, address });
                 toast({ title: 'Beneficiary created', status: 'success' });
             }
             setName('');

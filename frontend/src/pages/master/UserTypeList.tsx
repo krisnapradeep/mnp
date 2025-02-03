@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Table, Thead, Tbody, Tr, Th, Td, useToast } from '@chakra-ui/react';
-import axios from 'axios';
+import { axiosInstance } from '../../config/config';
 
 const UserTypeList: React.FC = () => {
     const [userTypes, setUserTypes] = useState<any[]>([]);
@@ -9,7 +9,7 @@ const UserTypeList: React.FC = () => {
     useEffect(() => {
         const fetchUserTypes = async () => {
             try {
-                const response = await axios.get('/api/user-types');
+                const response = await axiosInstance.get('/usertypes');
                 setUserTypes(response.data);
             } catch (error) {
                 toast({

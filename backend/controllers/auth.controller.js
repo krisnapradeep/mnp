@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
+const UserType = require('../models/userType.model');
 
-const signToken = (id) => {
+const signToken = (id, userType) => {
     try {
-        return jwt.sign({ id }, process.env.JWT_SECRET, {
+        return jwt.sign({ id, userType }, process.env.JWT_SECRET, {
             expiresIn: process.env.JWT_EXPIRES_IN
         });
     } catch (error) {
@@ -55,7 +56,9 @@ exports.login = async (req, res) => {
         }
 
         // 2) Check if user exists
-        const user = await User.findOne({ email }).select('+password');
+        const user = await User.findOne({ email })
+        .populate('userType', 'userType')
+        .select('+password');
 
         if (!user) {
             return res.status(401).json({
@@ -74,8 +77,10 @@ exports.login = async (req, res) => {
             });
         }
 
+        console.log("user", user)
+
         // 4) Generate token
-        const token = signToken(user._id);
+        const token = signToken(user._id, user.userType.userType);
 
         // Remove password from output
         user.password = undefined;

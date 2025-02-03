@@ -3,6 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const logger = require('./middleware/logger');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpecs = require('./swagger');
 
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
@@ -19,6 +21,7 @@ const supplierPaymentRoutes = require('./routes/supplierPayment.routes');
 const beneficiaryRoutes = require('./routes/beneficiary.routes');
 const beneficiaryTypeRoutes = require('./routes/beneficiaryType.routes');
 const beneficiaryListRoutes = require('./routes/beneficiaryList.routes');
+
 
 
 const app = express();
@@ -56,19 +59,19 @@ app.post('/api/test-post', (req, res) => {
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/usertypes', userTypeRoutes);
-app.use('/api/districtFunds', districtFundsRoutes);
+app.use('/api/usertype', userTypeRoutes);
+app.use('/api/districtFund', districtFundsRoutes);
 app.use('/api/reports', reportRoutes);
-app.use('/api/years', yearRoutes);
-app.use('/api/districts', districtRoutes);
-app.use('/api/suppliers', supplierRoutes);
-app.use('/api/categories', categoryRoutes);
-app.use('/api/articleOrders', articleOrderRoutes);
-app.use('/api/articles', articleRoutes);
-app.use('/api/supplierPayments', supplierPaymentRoutes);
-app.use('/api/beneficiaries', beneficiaryRoutes);
-app.use('/api/beneficiaryTypes', beneficiaryTypeRoutes);
-app.use('/api/beneficiaryLists', beneficiaryListRoutes);
+app.use('/api/year', yearRoutes);
+app.use('/api/district', districtRoutes);
+app.use('/api/supplier', supplierRoutes);
+app.use('/api/category', categoryRoutes);
+app.use('/api/articleOrder', articleOrderRoutes);
+app.use('/api/article', articleRoutes);
+app.use('/api/supplierPayment', supplierPaymentRoutes);
+app.use('/api/beneficiary', beneficiaryRoutes);
+app.use('/api/beneficiaryType', beneficiaryTypeRoutes);
+app.use('/api/beneficiaryList', beneficiaryListRoutes);
 
 // Use logger middleware
 app.use(logger);
@@ -81,6 +84,9 @@ app.use((err, req, res, next) => {
         message: err.message || 'Something went wrong!'
     });
 });
+
+// Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 // Database connection
 mongoose.connect(process.env.MONGODB_URI)

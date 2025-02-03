@@ -12,6 +12,10 @@ const articleSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  unitCost: {
+    type: Number,
+    required: true
+  },
   isActive: {
     type: Boolean,
     default: true

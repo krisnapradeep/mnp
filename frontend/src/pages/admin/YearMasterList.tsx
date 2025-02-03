@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, IconButton, useToast } from '@chakra-ui/react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
-import axios from 'axios';
+import { axiosInstance } from '../../../config/config';
 import YearMasterForm from './YearMasterForm';
 
 const YearMasterList: React.FC = () => {
@@ -16,7 +16,7 @@ const YearMasterList: React.FC = () => {
 
     const fetchYears = async () => {
         try {
-            const response = await axios.get('/api/year-master');
+            const response = await axiosInstance.get('/year');
             setYears(response.data);
         } catch (error) {
             toast({ title: 'Error fetching years', status: 'error' });
@@ -25,7 +25,7 @@ const YearMasterList: React.FC = () => {
 
     const handleDelete = async (id: string) => {
         try {
-            await axios.delete(`/api/year-master/${id}`);
+            await axiosInstance.delete(`/year/${id}`);
             fetchYears();
             toast({ title: 'Year deleted', status: 'success' });
         } catch (error) {

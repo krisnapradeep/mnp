@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
-import axios from 'axios';
+import { axiosInstance } from '../../config/config';
 
 const ArticleForm: React.FC<{ visible: boolean; onCancel: () => void; onSuccess: () => void; record?: any; }> = ({ visible, onCancel, onSuccess, record }) => {
     const [articleName, setArticleName] = useState('');
@@ -21,10 +21,10 @@ const ArticleForm: React.FC<{ visible: boolean; onCancel: () => void; onSuccess:
         e.preventDefault();
         try {
             if (record) {
-                await axios.put(`/api/article/${record.articleId}`, { articleName, description });
+                await axiosInstance.put(`/article/${record.articleId}`, { articleName, description });
                 toast({ title: 'Article updated', status: 'success' });
             } else {
-                await axios.post('/api/article', { articleName, description });
+                await axiosInstance.post('/article', { articleName, description });
                 toast({ title: 'Article created', status: 'success' });
             }
             setArticleName('');

@@ -6,6 +6,16 @@ const beneficiarySchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  code: {
+    type: Number,
+    required: true,
+    max: 9999
+  },
+  prefix: {
+    type: String,
+    required: true,
+    maxlength: 2
+  },
   uniqueId: {
     type: String,
     required: true,

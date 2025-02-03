@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, IconButton, useToast } from '@chakra-ui/react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
-import axios from 'axios';
+import { axiosInstance } from '../../../config/config';
 import ArticleForm from './ArticleForm';
 
 const ArticleList: React.FC = () => {
@@ -16,7 +16,7 @@ const ArticleList: React.FC = () => {
 
     const fetchArticles = async () => {
         try {
-            const response = await axios.get('/api/article');
+            const response = await axiosInstance.get('/article');
             setArticles(response.data);
         } catch (error) {
             toast({ title: 'Error fetching articles', status: 'error' });
@@ -25,7 +25,7 @@ const ArticleList: React.FC = () => {
 
     const handleDelete = async (id: string) => {
         try {
-            await axios.delete(`/api/article/${id}`);
+            await axiosInstance.delete(`/article/${id}`);
             fetchArticles();
             toast({ title: 'Article deleted', status: 'success' });
         } catch (error) {

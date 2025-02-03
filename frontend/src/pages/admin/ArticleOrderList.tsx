@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, IconButton, useToast } from '@chakra-ui/react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
-import axios from 'axios';
+import { axiosInstance } from '../../../config/config';
 import ArticleOrderForm from './ArticleOrderForm';
 
 const ArticleOrderList: React.FC = () => {
@@ -16,7 +16,7 @@ const ArticleOrderList: React.FC = () => {
 
     const fetchArticleOrders = async () => {
         try {
-            const response = await axios.get('/api/article-order');
+            const response = await axiosInstance.get('/articleorder');
             setArticleOrders(response.data);
         } catch (error) {
             toast({ title: 'Error fetching article orders', status: 'error' });
@@ -25,7 +25,7 @@ const ArticleOrderList: React.FC = () => {
 
     const handleDelete = async (id: string) => {
         try {
-            await axios.delete(`/api/article-order/${id}`);
+            await axiosInstance.delete(`/article-order/${id}`);
             fetchArticleOrders();
             toast({ title: 'Article order deleted', status: 'success' });
         } catch (error) {

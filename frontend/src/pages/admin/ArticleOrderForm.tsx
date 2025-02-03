@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
-import axios from 'axios';
+import { axiosInstance } from '../../config/config';
 
 const ArticleOrderForm: React.FC<{ visible: boolean; onCancel: () => void; onSuccess: () => void; record?: any; }> = ({ visible, onCancel, onSuccess, record }) => {
     const [supplierId, setSupplierId] = useState('');
@@ -24,10 +24,10 @@ const ArticleOrderForm: React.FC<{ visible: boolean; onCancel: () => void; onSuc
         e.preventDefault();
         try {
             if (record) {
-                await axios.put(`/api/article-order/${record.articleOrderId}`, { supplierId, articleId, quantity });
+                await axiosInstance.put(`/article-order/${record.articleOrderId}`, { supplierId, articleId, quantity });
                 toast({ title: 'Article order updated', status: 'success' });
             } else {
-                await axios.post('/api/article-order', { supplierId, articleId, quantity });
+                await axiosInstance.post('/article-order', { supplierId, articleId, quantity });
                 toast({ title: 'Article order created', status: 'success' });
             }
             setSupplierId('');

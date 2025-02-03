@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, IconButton, useToast } from '@chakra-ui/react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
-import axios from 'axios';
+import { axiosInstance } from '../../config/config';
 import UserTypeForm from './UserTypeForm';
 
 const UserTypeList: React.FC = () => {
@@ -16,7 +16,7 @@ const UserTypeList: React.FC = () => {
 
     const fetchUserTypes = async () => {
         try {
-            const response = await axios.get('/api/user-types');
+            const response = await axiosInstance.get('/userytpes');
             setUserTypes(response.data);
         } catch (error) {
             toast({ title: 'Error fetching user types', status: 'error' });
@@ -25,7 +25,7 @@ const UserTypeList: React.FC = () => {
 
     const handleDelete = async (id: string) => {
         try {
-            await axios.delete(`/api/user-types/${id}`);
+            await axiosInstance.delete(`/user-types/${id}`);
             fetchUserTypes();
             toast({ title: 'User type deleted', status: 'success' });
         } catch (error) {
@@ -52,8 +52,8 @@ const UserTypeList: React.FC = () => {
                             <Td>{userType.userType}</Td>
                             <Td>{userType.isActive ? 'Active' : 'Inactive'}</Td>
                             <Td>
-                                <IconButton icon={<FiEdit2 />} onClick={() => { setSelectedUserType(userType); setFormVisible(true); }} />
-                                <IconButton icon={<FiTrash2 />} onClick={() => handleDelete(userType.userTypeId)} />
+                                <IconButton icon={<FiEdit2 />} aria-label="Edit" onClick={() => { setSelectedUserType(userType); setFormVisible(true); }}  />
+                                <IconButton icon={<FiTrash2 />} aria-label="Delete" onClick={() => handleDelete(userType.userTypeId)} />
                             </Td>
                         </Tr>
                     ))}

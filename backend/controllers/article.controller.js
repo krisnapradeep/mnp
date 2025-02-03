@@ -1,10 +1,14 @@
 const Article = require('../models/article.model');
+const mongoose = require('mongoose');
 
 // Create Article
 exports.createArticle = async (req, res) => {
     try {
-        const article = await Article.create(req.body);
-        res.status(201).json({ status: 'success', data: { article } });
+        const { categoryId, articleName } = req.body;
+        const categoryObjId = new mongoose.Types.ObjectId(categoryId);
+
+        const data = await Article.create({ categoryId: categoryObjId, articleName, createdBy: req.user.id });
+        res.status(201).json({ status: 'success', data });
     } catch (error) {
         res.status(400).json({ status: 'fail', message: error.message });
     }
@@ -17,7 +21,37 @@ exports.getAllArticles = async (req, res) => {
         .populate({path : 'categoryId', select: 'categoryName'})
         .select('_id articleName categoryId categoryName')
         .where('isActive').equals(true);
-        res.status(200).json({ status: 'success', results: articles.length, data: { articles } });
+
+        const data = articles.map(df => ({
+            id: df._id,
+            articleName: df.articleName,
+            categoryName: df.categoryId.categoryName,
+            categoryId: df.categoryId._id,
+        }));
+
+        res.status(200).json({ status: 'success', results: data.length, data });
+    } catch (error) {
+        res.status(400).json({ status: 'fail', message: error.message });
+    }
+};
+
+// Get all Articles in a category
+exports.getAllArticlesByCategory = async (req, res) => {
+    try {
+        const articles = await Article.find({ categoryId: req.params.id })
+        .populate({path : 'categoryId', select: 'categoryName'})
+        .select('_id articleName categoryId categoryName unitCost')
+        .where('isActive').equals(true);
+
+        const data = articles.map(df => ({
+            id: df._id,
+            articleName: df.articleName,
+            categoryName: df.categoryId.categoryName,
+            categoryId: df.categoryId._id,
+            unitCost: df.unitCost
+        }));
+
+        res.status(200).json({ status: 'success', length: data.length, data });
     } catch (error) {
         res.status(400).json({ status: 'fail', message: error.message });
     }
@@ -26,9 +60,18 @@ exports.getAllArticles = async (req, res) => {
 // Get Article by ID
 exports.getArticleById = async (req, res) => {
     try {
-        const article = await Article.findById(req.params.id);
+        const article = await Article.find({ _id: req.params.id })
+        .populate({path : 'categoryId', select: 'categoryName'})
+        .select('_id articleName categoryId categoryName');
         if (!article) return res.status(404).json({ status: 'fail', message: 'Article not found' });
-        res.status(200).json({ status: 'success', data: { article } });
+        const data = article.map(df => ({
+            id: df._id,
+            articleName: df.articleName,
+            categoryName: df.categoryId.categoryName,
+            categoryId: df.categoryId._id,
+        }));
+
+        res.status(200).json({ status: 'success', results: data.length, data });
     } catch (error) {
         res.status(400).json({ status: 'fail', message: error.message });
     }
@@ -50,7 +93,7 @@ exports.deleteArticle = async (req, res) => {
     try {
         const article = await Article.findByIdAndDelete(req.params.id);
         if (!article) return res.status(404).json({ status: 'fail', message: 'Article not found' });
-        res.status(204).json({ status: 'success', data: null });
+        res.status(200).json({ status: 'success', data: null });
     } catch (error) {
         res.status(400).json({ status: 'fail', message: error.message });
     }

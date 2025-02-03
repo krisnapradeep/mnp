@@ -16,8 +16,6 @@ import {
     FiTrendingUp,
     FiStar,
     FiSettings,
-    FiMenu,
-    FiChevronDown,
 } from 'react-icons/fi';
 
 interface LinkItemProps {
@@ -39,7 +37,6 @@ const MasterItems: Array<LinkItemProps> = [
     { name: 'Settings', icon: FiSettings, path: '/admin/settings' },
     { name: 'Articles', icon: FiStar, path: '/admin/articles' },
     { name: 'Article Orders', icon: FiStar, path: '/admin/article-orders' },
-    { name: 'Beneficiaries', icon: FiStar, path: '/admin/beneficiaries' },
     { name: 'Beneficiary Types', icon: FiStar, path: '/admin/beneficiary-types' },
     { name: 'Categories', icon: FiStar, path: '/admin/categories' },
     { name: 'Districts', icon: FiStar, path: '/admin/districts' },

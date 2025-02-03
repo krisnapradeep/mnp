@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Button, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
-import axios from 'axios';
+import { axiosInstance } from '../config/config';
 
 const UserTypeForm = () => {
     const [name, setName] = useState('');
@@ -9,7 +9,7 @@ const UserTypeForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('/api/user-types', { name });
+            await axiosInstance.post('/user-types', { name });
             toast({ title: 'User type created', status: 'success' });
             setName('');
         } catch (error) {

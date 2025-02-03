@@ -32,7 +32,7 @@ const Header = () => {
     const { colorMode, toggleColorMode } = useColorMode();
     const { logout } = useAuth();
     const navigate = useNavigate();
-    
+
     const bgColor = useColorModeValue('white', 'navy.800');
     const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
     const shadowColor = useColorModeValue(
@@ -121,10 +121,15 @@ const Header = () => {
                     {/* User Menu */}
                     <Menu>
                         <MenuButton>
-                            <Avatar
+                            {/* <Avatar
                                 size="sm"
                                 name="John Doe"
                                 src="../../assets/images/profile.jpg"
+                            /> */}
+                            <IconButton
+                                aria-label="Toggle Dark Mode"
+                                icon={<FiUser />}
+                                variant="ghost"
                             />
                         </MenuButton>
                         <MenuList>

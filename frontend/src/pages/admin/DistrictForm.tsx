@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
-import axios from 'axios';
+import { axiosInstance } from '../../../config/config';
 
 const DistrictForm: React.FC<{ visible: boolean; onCancel: () => void; onSuccess: () => void; record?: any; }> = ({ visible, onCancel, onSuccess, record }) => {
     const [districtName, setDistrictName] = useState('');
@@ -30,10 +30,10 @@ const DistrictForm: React.FC<{ visible: boolean; onCancel: () => void; onSuccess
         e.preventDefault();
         try {
             if (record) {
-                await axios.put(`/api/district/${record.districtId}`, { districtName, head, contactNo, emailId, communicationAddress });
+                await axiosInstance.put(`/district/${record.districtId}`, { districtName, head, contactNo, emailId, communicationAddress });
                 toast({ title: 'District updated', status: 'success' });
             } else {
-                await axios.post('/api/district', { districtName, head, contactNo, emailId, communicationAddress });
+                await axiosInstance.post('/district', { districtName, head, contactNo, emailId, communicationAddress });
                 toast({ title: 'District created', status: 'success' });
             }
             setDistrictName('');

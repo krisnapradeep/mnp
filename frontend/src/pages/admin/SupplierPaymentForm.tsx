@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
-import axios from 'axios';
+import { axiosInstance } from '../../../config/config';
 
 const SupplierPaymentForm: React.FC<{ visible: boolean; onCancel: () => void; onSuccess: () => void; record?: any; }> = ({ visible, onCancel, onSuccess, record }) => {
     const [supplierId, setSupplierId] = useState('');
@@ -24,10 +24,10 @@ const SupplierPaymentForm: React.FC<{ visible: boolean; onCancel: () => void; on
         e.preventDefault();
         try {
             if (record) {
-                await axios.put(`/api/supplier-payment/${record.supplierPaymentId}`, { supplierId, amount, date });
+                await axiosInstance.put(`/supplier-payment/${record.supplierPaymentId}`, { supplierId, amount, date });
                 toast({ title: 'Supplier payment updated', status: 'success' });
             } else {
-                await axios.post('/api/supplier-payment', { supplierId, amount, date });
+                await axiosInstance.post('/supplier-payment', { supplierId, amount, date });
                 toast({ title: 'Supplier payment created', status: 'success' });
             }
             setSupplierId('');

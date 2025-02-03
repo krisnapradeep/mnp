@@ -22,6 +22,15 @@ const districtFundsSchema = new mongoose.Schema({
     funds_balance: {
         type: Number,
         default: 0
+    },
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    updatedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 }, { timestamps: true });
 

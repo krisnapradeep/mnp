@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, IconButton, useToast } from '@chakra-ui/react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
-import axios from 'axios';
+import { axiosInstance } from '../config/config';
 
 const UserTypeList = () => {
     const [userTypes, setUserTypes] = useState([]);
@@ -13,7 +13,7 @@ const UserTypeList = () => {
 
     const fetchUserTypes = async () => {
         try {
-            const response = await axios.get('/api/user-types');
+            const response = await axiosInstance.get('/usertypes');
             setUserTypes(response.data);
         } catch (error) {
             toast({ title: 'Error fetching user types', status: 'error' });
@@ -22,7 +22,7 @@ const UserTypeList = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`/api/user-types/${id}`);
+            await axiosInstance.delete(`/user-types/${id}`);
             fetchUserTypes();
             toast({ title: 'User type deleted', status: 'success' });
         } catch (error) {
@@ -43,9 +43,9 @@ const UserTypeList = () => {
                 </Thead>
                 <Tbody>
                     {userTypes.map((userType) => (
-                        <Tr key={userType.id}>
-                            <Td>{userType.id}</Td>
-                            <Td>{userType.name}</Td>
+                        <Tr key={userType}>
+                            <Td>{userType}</Td>
+                            <Td>{userType}</Td>
                             <Td>
                                 <IconButton icon={<FiEdit2 />} aria-label="Edit" onClick={() => {/* Navigate to edit form */}} />
                                 <IconButton icon={<FiTrash2 />} aria-label="Delete" onClick={() => handleDelete(userType.id)} />

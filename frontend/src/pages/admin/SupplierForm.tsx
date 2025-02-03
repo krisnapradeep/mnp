@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
-import axios from 'axios';
+import { axiosInstance } from '../../../config/config';
 
 const SupplierForm: React.FC<{ visible: boolean; onCancel: () => void; onSuccess: () => void; record?: any; }> = ({ visible, onCancel, onSuccess, record }) => {
     const [name, setName] = useState('');
@@ -33,10 +33,10 @@ const SupplierForm: React.FC<{ visible: boolean; onCancel: () => void; onSuccess
         e.preventDefault();
         try {
             if (record) {
-                await axios.put(`/api/supplier/${record.supplierId}`, { name, contactNo, address, bankAccountName, bankAccountNo, bankAccountIFSC });
+                await axiosInstance.put(`/supplier/${record.supplierId}`, { name, contactNo, address, bankAccountName, bankAccountNo, bankAccountIFSC });
                 toast({ title: 'Supplier updated', status: 'success' });
             } else {
-                await axios.post('/api/supplier', { name, contactNo, address, bankAccountName, bankAccountNo, bankAccountIFSC });
+                await axiosInstance.post('/supplier', { name, contactNo, address, bankAccountName, bankAccountNo, bankAccountIFSC });
                 toast({ title: 'Supplier created', status: 'success' });
             }
             setName('');

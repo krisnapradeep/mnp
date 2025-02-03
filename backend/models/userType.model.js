@@ -1,13 +1,6 @@
 const mongoose = require('mongoose');
 
 const userTypeSchema = new mongoose.Schema({
-    userTypeId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        unique: true,
-        index: true,
-        auto:true
-    },
     userType: {
         type: String,
         required: true,

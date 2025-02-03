@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
-import axios from 'axios';
+import { axiosInstance } from '../../../config/config';
 
 const BeneficiaryTypeForm: React.FC<{ visible: boolean; onCancel: () => void; onSuccess: () => void; record?: any; }> = ({ visible, onCancel, onSuccess, record }) => {
     const [beneficiaryType, setBeneficiaryType] = useState('');
@@ -18,10 +18,10 @@ const BeneficiaryTypeForm: React.FC<{ visible: boolean; onCancel: () => void; on
         e.preventDefault();
         try {
             if (record) {
-                await axios.put(`/api/beneficiary-type/${record.beneficiaryTypeId}`, { beneficiaryType });
+                await axiosInstance.put(`/beneficiary-type/${record.beneficiaryTypeId}`, { beneficiaryType });
                 toast({ title: 'Beneficiary type updated', status: 'success' });
             } else {
-                await axios.post('/api/beneficiary-type', { beneficiaryType });
+                await axiosInstance.post('/beneficiary-type', { beneficiaryType });
                 toast({ title: 'Beneficiary type created', status: 'success' });
             }
             setBeneficiaryType('');

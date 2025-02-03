@@ -13,8 +13,9 @@ exports.createDistrict = async (req, res) => {
 // Get all Districts
 exports.getAllDistricts = async (req, res) => {
     try {
-        const districts = await District.find();
-        res.status(200).json({ status: 'success', results: districts.length, data: { districts } });
+        const data = await District.find()
+        .select('_id districtName');
+        res.status(200).json({ status: 'success', length: data.length, data });
     } catch (error) {
         res.status(400).json({ status: 'fail', message: error.message });
     }

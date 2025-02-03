@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
-import axios from 'axios';
+import { axiosInstance } from '../../../config/config';
 
 const YearMasterForm: React.FC<{ visible: boolean; onCancel: () => void; onSuccess: () => void; record?: any; }> = ({ visible, onCancel, onSuccess, record }) => {
     const [year, setYear] = useState<number | string>('');
@@ -21,10 +21,10 @@ const YearMasterForm: React.FC<{ visible: boolean; onCancel: () => void; onSucce
         e.preventDefault();
         try {
             if (record) {
-                await axios.put(`/api/year-master/${record.yearMasterId}`, { year, isCurrent });
+                await axiosInstance.put(`/year/${record.yearMasterId}`, { year, isCurrent });
                 toast({ title: 'Year updated', status: 'success' });
             } else {
-                await axios.post('/api/year-master', { year, isCurrent });
+                await axiosInstance.post('/year', { year, isCurrent });
                 toast({ title: 'Year created', status: 'success' });
             }
             setYear('');

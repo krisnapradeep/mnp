@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
-import axios from 'axios';
+import { axiosInstance } from '../../config/config';
 
 const CategoryForm: React.FC<{ visible: boolean; onCancel: () => void; onSuccess: () => void; record?: any; }> = ({ visible, onCancel, onSuccess, record }) => {
     const [categoryName, setCategoryName] = useState('');
@@ -18,10 +18,10 @@ const CategoryForm: React.FC<{ visible: boolean; onCancel: () => void; onSuccess
         e.preventDefault();
         try {
             if (record) {
-                await axios.put(`/api/category/${record.categoryId}`, { categoryName });
+                await axiosInstance.put(`/category/${record.categoryId}`, { categoryName });
                 toast({ title: 'Category updated', status: 'success' });
             } else {
-                await axios.post('/api/category', { categoryName });
+                await axiosInstance.post('/category', { categoryName });
                 toast({ title: 'Category created', status: 'success' });
             }
             setCategoryName('');

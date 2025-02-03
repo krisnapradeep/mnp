@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, IconButton, useToast } from '@chakra-ui/react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
-import axios from 'axios';
+import { axiosInstance } from '../../../config/config';
 import CategoryForm from './CategoryForm';
 
 const CategoryList: React.FC = () => {
@@ -16,7 +16,7 @@ const CategoryList: React.FC = () => {
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get('/api/category');
+            const response = await axiosInstance.get('/category');
             setCategories(response.data);
         } catch (error) {
             toast({ title: 'Error fetching categories', status: 'error' });
@@ -25,7 +25,7 @@ const CategoryList: React.FC = () => {
 
     const handleDelete = async (id: string) => {
         try {
-            await axios.delete(`/api/category/${id}`);
+            await axiosInstance.delete(`/category/${id}`);
             fetchCategories();
             toast({ title: 'Category deleted', status: 'success' });
         } catch (error) {

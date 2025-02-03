@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { SmallCloseIcon } from '@chakra-ui/icons';
 import { useAuth } from '../../context/AuthContext';
-import axios from 'axios';
+import { axiosInstance } from '../../config/config';
 
 export default function Profile() {
     const { user, token } = useAuth();
@@ -26,9 +26,7 @@ export default function Profile() {
 
     const [formData, setFormData] = useState({
         name: user?.name || '',
-        email: user?.email || '',
-        position: user?.position || '',
-        department: user?.department || ''
+        email: user?.email || ''
     });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,8 +42,8 @@ export default function Profile() {
         setIsLoading(true);
 
         try {
-            const response = await axios.patch(
-                'http://localhost:5000/api/users/profile',
+            await axiosInstance.patch(
+                'users/profile',
                 formData,
                 {
                     headers: { Authorization: `Bearer ${token}` }
@@ -122,24 +120,6 @@ export default function Profile() {
                                 type="email"
                                 name="email"
                                 value={formData.email}
-                                onChange={handleInputChange}
-                            />
-                        </FormControl>
-                        <FormControl id="position">
-                            <FormLabel>Position</FormLabel>
-                            <Input
-                                type="text"
-                                name="position"
-                                value={formData.position}
-                                onChange={handleInputChange}
-                            />
-                        </FormControl>
-                        <FormControl id="department">
-                            <FormLabel>Department</FormLabel>
-                            <Input
-                                type="text"
-                                name="department"
-                                value={formData.department}
                                 onChange={handleInputChange}
                             />
                         </FormControl>

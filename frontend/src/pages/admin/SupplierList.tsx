@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, IconButton, useToast } from '@chakra-ui/react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
-import axios from 'axios';
+import { axiosInstance } from '../../../config/config';
 import SupplierForm from './SupplierForm';
 
 const SupplierList: React.FC = () => {
@@ -16,7 +16,7 @@ const SupplierList: React.FC = () => {
 
     const fetchSuppliers = async () => {
         try {
-            const response = await axios.get('/api/supplier');
+            const response = await axiosInstance.get('/supplier');
             setSuppliers(response.data);
         } catch (error) {
             toast({ title: 'Error fetching suppliers', status: 'error' });
@@ -25,7 +25,7 @@ const SupplierList: React.FC = () => {
 
     const handleDelete = async (id: string) => {
         try {
-            await axios.delete(`/api/supplier/${id}`);
+            await axiosInstance.delete(`/supplier/${id}`);
             fetchSuppliers();
             toast({ title: 'Supplier deleted', status: 'success' });
         } catch (error) {

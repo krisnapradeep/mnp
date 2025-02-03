@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, IconButton, useToast } from '@chakra-ui/react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
-import axios from 'axios';
+import { axiosInstance } from '../../../config/config';
 import BeneficiaryTypeForm from './BeneficiaryTypeForm';
 
 const BeneficiaryTypeList: React.FC = () => {
@@ -16,7 +16,7 @@ const BeneficiaryTypeList: React.FC = () => {
 
     const fetchBeneficiaryTypes = async () => {
         try {
-            const response = await axios.get('/api/beneficiary-type');
+            const response = await axiosInstance.get('/beneficiarytype');
             setBeneficiaryTypes(response.data);
         } catch (error) {
             toast({ title: 'Error fetching beneficiary types', status: 'error' });
@@ -25,7 +25,7 @@ const BeneficiaryTypeList: React.FC = () => {
 
     const handleDelete = async (id: string) => {
         try {
-            await axios.delete(`/api/beneficiary-type/${id}`);
+            await axiosInstance.delete(`/beneficiary-type/${id}`);
             fetchBeneficiaryTypes();
             toast({ title: 'Beneficiary type deleted', status: 'success' });
         } catch (error) {

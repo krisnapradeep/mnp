@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, IconButton, useToast } from '@chakra-ui/react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
-import axios from 'axios';
+import { axiosInstance } from '../../../config/config';
 import DistrictForm from './DistrictForm';
 
 const DistrictList: React.FC = () => {
@@ -16,7 +16,7 @@ const DistrictList: React.FC = () => {
 
     const fetchDistricts = async () => {
         try {
-            const response = await axios.get('/api/district');
+            const response = await axiosInstance.get('/district');
             setDistricts(response.data);
         } catch (error) {
             toast({ title: 'Error fetching districts', status: 'error' });
@@ -25,7 +25,7 @@ const DistrictList: React.FC = () => {
 
     const handleDelete = async (id: string) => {
         try {
-            await axios.delete(`/api/district/${id}`);
+            await axiosInstance.delete(`/district/${id}`);
             fetchDistricts();
             toast({ title: 'District deleted', status: 'success' });
         } catch (error) {

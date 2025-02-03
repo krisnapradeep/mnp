@@ -13,11 +13,12 @@ exports.createCategory = async (req, res) => {
 // Get all Categories
 exports.getAllCategories = async (req, res) => {
     try {
-        const categories = await Category.find()
-        .select('_id categoryName')
-        .where('isActive').equals(true);
-        res.status(200).json({ status: 'success', results: categories.length, data: { categories } });
+        const data = await Category.find()
+        .where('isActive').equals(true)
+        .select('_id categoryName');
+        res.status(200).json({ status: 'success', length: data.length, data });
     } catch (error) {
+        console.log("Categories ", error)
         res.status(400).json({ status: 'fail', message: error.message });
     }
 };

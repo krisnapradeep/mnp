@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
-import axios from 'axios';
+import { axiosInstance } from '../../../config/config';
 
 const UserTypeForm: React.FC<{ visible: boolean; onCancel: () => void; onSuccess: () => void; record?: any; }> = ({ visible, onCancel, onSuccess, record }) => {
     const [name, setName] = useState('');
@@ -18,10 +18,10 @@ const UserTypeForm: React.FC<{ visible: boolean; onCancel: () => void; onSuccess
         e.preventDefault();
         try {
             if (record) {
-                await axios.put(`/api/user-types/${record.userTypeId}`, { userType: name });
+                await axiosInstance.put(`/user-types/${record.userTypeId}`, { userType: name });
                 toast({ title: 'User type updated', status: 'success' });
             } else {
-                await axios.post('/api/user-types', { userType: name });
+                await axiosInstance.post('/user-types', { userType: name });
                 toast({ title: 'User type created', status: 'success' });
             }
             setName('');
