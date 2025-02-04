@@ -199,6 +199,7 @@ exports.checkBeneficiaryListExists = async (req, res, next) => {
             const beneficiaryList = await BeneficiaryList.find({ districtId, yearId, articleId, beneficiaryTypeId }); 
             if (beneficiaryList.length > 0 ){
                 const data = beneficiaryList.map(df => ({
+                    id: df._id,
                     quantity: df.quantity
                 }))
                 return res.status(200).json({ status: 'success', length: beneficiaryList.length, data});
@@ -211,6 +212,7 @@ exports.checkBeneficiaryListExists = async (req, res, next) => {
             const beneficiaryList = await BeneficiaryList.find({ beneficiaryTypeId, yearId, beneficiaryId, articleId }); 
             if (beneficiaryList.length > 0 ){
                 const data = beneficiaryList.map(df => ({
+                    id: df._id,
                     quantity: df.quantity
                 }))
                 return res.status(200).json({ status: 'success', length: beneficiaryList.length, data});

@@ -160,7 +160,7 @@ router.get('/:id', authMiddleware.protect, beneficiaryListController.getBenefici
  *               unitCost:
  *                 type: number
  *     responses:
- *       201:
+ *       200:
  *         description: Beneficiary list created successfully
  *         content:
  *           application/json:
@@ -181,6 +181,56 @@ router.get('/:id', authMiddleware.protect, beneficiaryListController.getBenefici
  *         $ref: '#/components/responses/UnauthorizedError'
  */
 router.post('/', authMiddleware.protect, beneficiaryListController.createBeneficiaryList);
+
+/**
+ * @swagger
+ * /api/beneficiarylist/check:
+ *   post:
+ *     summary: Check if beneficiary list exists
+ *     tags: [Beneficiary Lists]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - articleId
+ *               - districtId
+ *               - type
+ *               - beneficiaryId
+ *             properties:
+ *               type:
+ *                 type: string
+ *               articleId:
+ *                 type: string
+ *               districtId:
+ *                 type: string
+ *               beneficiaryId:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Check Beneficiary list
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 length:
+ *                   type: number
+ *                 data:
+ *                   type: array
+ *       400:
+ *         $ref: '#/components/responses/ValidationError'
+ *       401:
+ *         $ref: '#/components/responses/UnauthorizedError'
+ */
+router.post('/check', authMiddleware.protect, beneficiaryListController.checkBeneficiaryListExists);
 
 /**
  * @swagger
