@@ -88,8 +88,12 @@ export function useBeneficiaryForm(onSubmitSuccess?: () => void, onEditModeChang
     };
 
     const resetForm = () => {
+
         setFormData({
             ...defaultFormData,
+            categoryId: '',
+            articleId: '',
+            districtId: '',
             quantity: 0,
             unitCost: 0,
             totalCost: 0

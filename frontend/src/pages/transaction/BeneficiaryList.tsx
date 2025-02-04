@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Select from 'react-select';
 import { axiosInstance } from '../../config/config';
 import { DataTable } from '../../components/DataTable/DataTable';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
@@ -29,8 +30,24 @@ const BeneficiaryList: React.FC = () => {
         setIsEditMode
     } = useBeneficiaryForm(() => {
         // Callback after successful submission
-        fetchRecentEntries();
+        // Reset form data first
+        setFormData(prev => ({
+            ...prev,
+            categoryId: '',
+            articleId: '',
+            districtId: '',
+            quantity: 0,
+            unitCost: 0,
+            totalCost: 0
+        }));
+        console.log("resetForm", setFormData);
+        setCategories({ status: '', length: 0, data: [] });
+        setArticles({ status: '', length: 0, data: [] });
+        if (formType === 'District') {
+            setSelectedDistrict(null);
+        }
         setShowProgressBar(false); // to hide
+        fetchRecentEntries();
     });
 
     // State
@@ -45,13 +62,45 @@ const BeneficiaryList: React.FC = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [showProgressBar, setShowProgressBar] = useState(true);
 
+    // Custom styles for react-select
+    const selectStyles = {
+        control: (base: any) => ({
+            ...base,
+            minHeight: '36px',
+            width: '100%',
+            maxWidth: 'clamp(200px, 25vw, 340px)',
+            minWidth: 'min(340px, 90vw)',
+        }),
+        menu: (base: any) => ({
+            ...base,
+            zIndex: 9999
+        })
+    };
+
+    // Convert data for react-select format
+    const districtOptions = districts.data.map(district => ({
+        value: district.districtId,
+        label: district.name
+    }));
+
+    const categoryOptions = categories.data.map(category => ({
+        value: category._id,
+        label: category.categoryName
+    }));
+
+    const articleOptions = articles.data.map(article => ({
+        value: article.id,
+        label: article.articleName,
+        unitCost: article.unitCost
+    }));
+
     // API calls
     const fetchRecentEntries = async () => {
-        console.log("fetchRecentEntries");
+        //console.log("fetchRecentEntries");
         try {
             setLoading(true);
             const response = await axiosInstance.get<BeneficiaryRecord>('/beneficiarylist');
-            console.log("beneficiarylist", response.data);
+            //console.log("beneficiarylist", response.data);
             setRecentEntries(response.data);
         } catch (error) {
             setError('Failed to fetch recent entries');
@@ -148,8 +197,8 @@ const BeneficiaryList: React.FC = () => {
         }
     };
 
-    const handleDistrictChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const districtId = event.target.value;
+    const handleDistrictChange = async (selectedOption: any) => {
+        const districtId = selectedOption ? selectedOption.value : '';
         setFormData(prev => ({ ...prev, districtId }));
         if (districtId) {
             // Find the selected district from the districts list
@@ -165,8 +214,8 @@ const BeneficiaryList: React.FC = () => {
         }
     };
 
-    const handleCategoryChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const categoryId = event.target.value;
+    const handleCategoryChange = async (selectedOption: any) => {
+        const categoryId = selectedOption ? selectedOption.value : '';
         setFormData(prev => ({ ...prev, categoryId }));
         if (categoryId) {
             await fetchArticles(categoryId);
@@ -175,37 +224,39 @@ const BeneficiaryList: React.FC = () => {
         }
     };
 
-    const handleArticleChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const article = articles.data.find(a => a.id === event.target.value);
-        if (article) {
-            setFormData(prev => ({
-                ...prev,
-                articleId: article.id,
-                unitCost: article.unitCost,
-                totalCost: prev.quantity * article.unitCost
-            }));
-
-            try {
-                // Check if beneficiary list exists for this article
-                const response = await axiosInstance.post('/beneficiarylist/check', {
-                    type: formData.type,
+    const handleArticleChange = async (selectedOption: any) => {
+        if (selectedOption) {
+            const article = articles.data.find(a => a.id === selectedOption.value);
+            if (article) {
+                setFormData(prev => ({
+                    ...prev,
                     articleId: article.id,
-                    districtId: formData.districtId ? formData.districtId : '',
-                    beneficiaryId: formData.beneficiaryId? formData.beneficiaryId : ''
-                });
+                    unitCost: article.unitCost,
+                    totalCost: prev.quantity * article.unitCost
+                }));
 
-                if (response.data.status === 'success' && response.data.data.length > 0) {
-                    const existingBeneficiary = response.data.data[0];
-                    setFormData(prev => ({
-                        ...prev,
-                        mode: 'Edit',
-                        id: existingBeneficiary.id,
-                        quantity: existingBeneficiary.quantity,
-                        totalCost: existingBeneficiary.quantity * article.unitCost
-                    }));
+                try {
+                    // Check if beneficiary list exists for this article
+                    const response = await axiosInstance.post('/beneficiarylist/check', {
+                        type: formData.type,
+                        articleId: article.id,
+                        districtId: formData.districtId ? formData.districtId : '',
+                        beneficiaryId: formData.beneficiaryId? formData.beneficiaryId : ''
+                    });
+
+                    if (response.data.status === 'success' && response.data.data.length > 0) {
+                        const existingBeneficiary = response.data.data[0];
+                        setFormData(prev => ({
+                            ...prev,
+                            mode: 'Edit',
+                            id: existingBeneficiary.id,
+                            quantity: existingBeneficiary.quantity,
+                            totalCost: existingBeneficiary.quantity * article.unitCost
+                        }));
+                    }
+                } catch (error) {
+                    //console.error('Error checking beneficiary list:', error);
                 }
-            } catch (error) {
-                console.error('Error checking beneficiary list:', error);
             }
         }
     };
@@ -290,20 +341,16 @@ const BeneficiaryList: React.FC = () => {
             {formType === 'District' && (
                 <div className="form-group">
                     <label htmlFor="districtId">District</label>
-                    <select
+                    <Select
                         id="districtId"
-                        value={formData.districtId || ''}
+                        value={districtOptions.find(option => option.value === formData.districtId) || null}
                         onChange={handleDistrictChange}
-                        required
-                    >
-                        <option value="">Select District</option>
-                        {districts?.data.map(district => (
-                            <option key={district.districtId} value={district.districtId}>
-                                {district.name}
-                            </option>
-                        ))}
-                    </select>
-
+                        options={districtOptions}
+                        isClearable
+                        isSearchable
+                        placeholder="Select District"
+                        styles={selectStyles}
+                    />
                     {selectedDistrict && showProgressBar && (
                         <ProgressBar
                             total={selectedDistrict.funds_total}
@@ -367,36 +414,30 @@ const BeneficiaryList: React.FC = () => {
 
             <div className="form-group">
                 <label htmlFor="categoryId">Category</label>
-                <select
+                <Select
                     id="categoryId"
-                    value={formData.categoryId}
+                    value={categoryOptions.find(option => option.value === formData.categoryId) || null}
                     onChange={handleCategoryChange}
-                    required
-                >
-                    <option value="">Select Category</option>
-                    {categories.data.map(category => (
-                        <option key={category._id} value={category._id}>
-                            {category.categoryName}
-                        </option>
-                    ))}
-                </select>
+                    options={categoryOptions}
+                    isClearable
+                    isSearchable
+                    placeholder="Select Category"
+                    styles={selectStyles}
+                />
             </div>
 
             <div className="form-group">
                 <label htmlFor="articleId">Article</label>
-                <select
+                <Select
                     id="articleId"
-                    value={formData.articleId}
+                    value={articleOptions.find(option => option.value === formData.articleId) || null}
                     onChange={handleArticleChange}
-                    required
-                >
-                    <option value="">Select Article</option>
-                    {articles.data.map(article => (
-                        <option key={article.id} value={article.id}>
-                            {article.articleName}
-                        </option>
-                    ))}
-                </select>
+                    options={articleOptions}
+                    isClearable
+                    isSearchable
+                    placeholder="Select Article"
+                    styles={selectStyles}
+                />
             </div>
 
             <div className="form-group">
