@@ -40,3 +40,46 @@
 .read-the-docs {
   color: #888;
 }
+
+@media (max-width: 768px) {
+    body {
+        font-size: 14px; /* Adjust font size for mobile */
+        padding: 10px; /* Add padding for mobile */
+    }
+    .container {
+        width: 100%; /* Full width on mobile */
+        flex-direction: column; /* Stack items vertically */
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    body {
+        font-size: 16px; /* Adjust font size for tablets */
+    }
+    .container {
+        width: 90%; /* Slightly reduced width for tablets */
+    }
+}
+
+@media (min-width: 1025px) {
+    body {
+        font-size: 18px; /* Default font size for desktops */
+    }
+    .container {
+        width: 80%; /* Default width for desktops */
+    }
+}
+@media (max-width: 480px) {
+    body {
+        font-size: 12px; /* Smaller font size for very small screens */
+        padding: 5px; /* Reduced padding */
+    }
+    .container {
+        width: 100%; /* Full width on very small screens */
+        flex-direction: column; /* Stack items vertically */
+    }
+    /* Additional adjustments for specific elements */
+    .header, .footer {
+        padding: 10px; /* Adjust header/footer padding */
+    }
+}

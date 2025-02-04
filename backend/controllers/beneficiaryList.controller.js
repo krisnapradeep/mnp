@@ -185,6 +185,46 @@ exports.getBeneficiaryListById = async (req, res) => {
     }
 };
 
+// Check if BeneficiaryList exists
+exports.checkBeneficiaryListExists = async (req, res, next) => {
+    try {
+        const current_year = await Year.findOne({ isCurrent: true, isActive: true });
+        const beneficiaryTypeId = await BeneficiaryType.findOne({ beneficiaryType: req.body.type });
+        const user_id = req.user._id;
+        const yearId = current_year._id;
+        const create_data = req.body
+        if (create_data.type === 'District') {
+            const districtId = new mongoose.Types.ObjectId(create_data.districtId);
+            const articleId = new mongoose.Types.ObjectId(create_data.articleId);
+            const beneficiaryList = await BeneficiaryList.find({ districtId, yearId, articleId, beneficiaryTypeId }); 
+            if (beneficiaryList.length > 0 ){
+                const data = beneficiaryList.map(df => ({
+                    quantity: df.quantity
+                }))
+                return res.status(200).json({ status: 'success', length: beneficiaryList.length, data});
+            }
+        }
+        else{
+
+            const beneficiaryId = new mongoose.Types.ObjectId(create_data.beneficiaryId);
+            const articleId = new mongoose.Types.ObjectId(create_data.articleId);
+            const beneficiaryList = await BeneficiaryList.find({ beneficiaryTypeId, yearId, beneficiaryId, articleId }); 
+            if (beneficiaryList.length > 0 ){
+                const data = beneficiaryList.map(df => ({
+                    quantity: df.quantity
+                }))
+                return res.status(200).json({ status: 'success', length: beneficiaryList.length, data});
+            }
+
+            }
+        res.status(200).json({ status: 'success', length: 0, data: null });
+       
+    } catch (error) {
+        res.status(400).json({ status: 'fail', message: error.message });
+    }
+};
+
+
 // Update BeneficiaryList
 exports.updateBeneficiaryList = async (req, res) => {
     try {
