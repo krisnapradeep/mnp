@@ -145,11 +145,20 @@ interface NavItemProps extends LinkProps {
 }
 
 const NavItem = ({ icon, path, isActive, children, onClick, onClose, ...rest }: NavItemProps) => {
+    const handleClick = (e: React.MouseEvent) => {
+        if (onClick) {
+            e.preventDefault(); // Prevent navigation when onClick is provided
+            onClick();
+        } else if (onClose) {
+            onClose();
+        }
+    };
+
     return (
         <ChakraLink
             as={RouterLink}
             to={path}
-            onClick={onClose}
+            onClick={handleClick}
             aria-label={typeof children === 'string' ? children : undefined}
             style={{ textDecoration: 'none' }}
             {...rest}

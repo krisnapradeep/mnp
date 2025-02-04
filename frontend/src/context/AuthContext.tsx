@@ -16,7 +16,8 @@ interface AuthContextType {
     isLoading: boolean;
 }
 
-const API_URL = process.env.API_BASE_URL || 'http://localhost:5005/api';
+const API_URL = import.meta.env.VITE_API_BASE_URL;
+console.log('API_URL:', API_URL);
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
