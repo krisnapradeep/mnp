@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, IconButton, useToast } from '@chakra-ui/react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
-import { axiosInstance } from '../../../config/config';
+import { axiosInstance } from '@/config/config';
 import BeneficiaryTypeForm from './BeneficiaryTypeForm';
 
 const BeneficiaryTypeList: React.FC = () => {
@@ -52,8 +52,16 @@ const BeneficiaryTypeList: React.FC = () => {
                             <Td>{beneficiaryType.beneficiaryType}</Td>
                             <Td>{beneficiaryType.isActive ? 'Active' : 'Inactive'}</Td>
                             <Td>
-                                <IconButton icon={<FiEdit2 />} onClick={() => { setSelectedBeneficiaryType(beneficiaryType); setFormVisible(true); }} />
-                                <IconButton icon={<FiTrash2 />} onClick={() => handleDelete(beneficiaryType.beneficiaryTypeId)} />
+                                <IconButton
+                                    icon={<FiEdit2 />}
+                                    onClick={() => { setSelectedBeneficiaryType(beneficiaryType); setFormVisible(true); }}
+                                    aria-label="Edit beneficiary type"
+                                />
+                                <IconButton
+                                    icon={<FiTrash2 />}
+                                    onClick={() => handleDelete(beneficiaryType.beneficiaryTypeId)}
+                                    aria-label="Delete beneficiary type"
+                                />
                             </Td>
                         </Tr>
                     ))}

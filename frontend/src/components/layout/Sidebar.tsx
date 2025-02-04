@@ -4,7 +4,8 @@ import {
     Flex,
     Icon,
     Text,
-    Link,
+    Link as ChakraLink,
+    LinkProps,
     BoxProps,
     useColorModeValue,
     Collapse,
@@ -83,6 +84,7 @@ export default function Sidebar({ onClose, ...rest }: SidebarProps) {
                     icon={link.icon}
                     path={link.path}
                     isActive={location.pathname === link.path}
+                    onClose={onClose}
                 >
                     {link.name}
                 </NavItem>
@@ -102,6 +104,7 @@ export default function Sidebar({ onClose, ...rest }: SidebarProps) {
                         icon={link.icon}
                         path={link.path}
                         isActive={location.pathname === link.path}
+                        onClose={onClose}
                     >
                         {link.name}
                     </NavItem>
@@ -122,6 +125,7 @@ export default function Sidebar({ onClose, ...rest }: SidebarProps) {
                         icon={link.icon}
                         path={link.path}
                         isActive={location.pathname === link.path}
+                        onClose={onClose}
                     >
                         {link.name}
                     </NavItem>
@@ -131,21 +135,23 @@ export default function Sidebar({ onClose, ...rest }: SidebarProps) {
     );
 }
 
-interface NavItemProps extends BoxProps {
+interface NavItemProps extends LinkProps {
     icon: IconType;
     path: string;
     isActive?: boolean;
     children: React.ReactNode;
     onClick?: () => void;
+    onClose?: () => void;
 }
 
-const NavItem = ({ icon, path, isActive, children, onClick, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, path, isActive, children, onClick, onClose, ...rest }: NavItemProps) => {
     return (
-        <Link
+        <ChakraLink
             as={RouterLink}
             to={path}
+            onClick={onClose}
+            aria-label={typeof children === 'string' ? children : undefined}
             style={{ textDecoration: 'none' }}
-            onClick={onClick}
             {...rest}
         >
             <Flex
@@ -167,6 +173,6 @@ const NavItem = ({ icon, path, isActive, children, onClick, ...rest }: NavItemPr
                 )}
                 {children}
             </Flex>
-        </Link>
+        </ChakraLink>
     );
 };

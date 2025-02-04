@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Button, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
-import { axiosInstance } from '../../../config/config';
+import { axiosInstance } from '@/config/config';
 
 const UserTypeForm: React.FC<{ visible: boolean; onCancel: () => void; onSuccess: () => void; }> = ({ visible, onCancel, onSuccess }) => {
     const [name, setName] = useState('');

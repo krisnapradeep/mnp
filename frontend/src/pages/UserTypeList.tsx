@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, IconButton, useToast } from '@chakra-ui/react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 import { axiosInstance } from '../config/config';
@@ -20,7 +20,7 @@ const UserTypeList = () => {
         }
     };
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (id: string) => {
         try {
             await axiosInstance.delete(`/user-types/${id}`);
             fetchUserTypes();
@@ -42,10 +42,10 @@ const UserTypeList = () => {
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {userTypes.map((userType) => (
-                        <Tr key={userType}>
-                            <Td>{userType}</Td>
-                            <Td>{userType}</Td>
+                    {userTypes.map((userType: { id: string; userType: string }) => (
+                        <Tr key={userType.id}>
+                            <Td>{userType.id}</Td>
+                            <Td>{userType.userType}</Td>
                             <Td>
                                 <IconButton icon={<FiEdit2 />} aria-label="Edit" onClick={() => {/* Navigate to edit form */}} />
                                 <IconButton icon={<FiTrash2 />} aria-label="Delete" onClick={() => handleDelete(userType.id)} />

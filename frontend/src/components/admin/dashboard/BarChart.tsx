@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import {
     Box,
     Flex,
@@ -26,7 +26,7 @@ const data = [
     { name: '7', value1: 2600, value2: 1600 }
 ];
 
-const BarChart = () => {
+const BarChart: FC = () => {
     const bgColor = useColorModeValue('white', 'navy.700');
     const textColor = useColorModeValue('secondaryGray.900', 'white');
     const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');

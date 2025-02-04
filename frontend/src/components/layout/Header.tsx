@@ -1,4 +1,4 @@
-import React from 'react';
+//import React from 'react';
 import {
     Box,
     Flex,
@@ -12,7 +12,7 @@ import {
     MenuList,
     useColorMode,
     useColorModeValue,
-    Avatar,
+    //Avatar,
     Text,
     Badge
 } from '@chakra-ui/react';

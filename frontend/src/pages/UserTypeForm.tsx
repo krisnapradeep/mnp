@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { Box, Button, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
 import { axiosInstance } from '../config/config';
 
@@ -6,7 +6,7 @@ const UserTypeForm = () => {
     const [name, setName] = useState('');
     const toast = useToast();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             await axiosInstance.post('/user-types', { name });

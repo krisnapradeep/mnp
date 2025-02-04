@@ -1,12 +1,12 @@
-import React from 'react';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+//import React from 'react';
+import { FiEdit2 } from 'react-icons/fi';  // Replaced FaEdit with FiEdit2
 import './DataTable.css';
 import { BeneficiaryRecord, BeneficiaryListParams } from '../../types/beneficiary';
 
 interface DataTableProps {
     data: BeneficiaryRecord;
     onEdit: (record: BeneficiaryListParams) => void;
-    onDelete: (id: string) => void;
+    //onDelete: (id: string) => void;
     hiddenColumns?: string[];  // Columns to hide in normal view
     columnOrder?: string[];    // Column display order
     isEditMode?: boolean;      // Whether table is in edit mode
@@ -15,7 +15,7 @@ interface DataTableProps {
 export const DataTable: React.FC<DataTableProps> = ({ 
     data, 
     onEdit, 
-    onDelete, 
+    //onDelete, 
     hiddenColumns = [], 
     columnOrder = [],
     isEditMode = false 
@@ -66,7 +66,7 @@ export const DataTable: React.FC<DataTableProps> = ({
                             ))}
                             <td className="actions">
                                 <button onClick={() => onEdit(df)} className="edit-btn">
-                                    <FaEdit />
+                                    <FiEdit2 />
                                 </button>
                                 {/* <button onClick={() => onDelete(df.id)} className="delete-btn">
                                     <FaTrash />

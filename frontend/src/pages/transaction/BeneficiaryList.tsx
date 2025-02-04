@@ -10,19 +10,28 @@ import {
     DistrictList,
     District,
     CategoryList,
-    ArticleList,
-    Article,
     BeneficiaryRecord,
     BeneficiaryListParams
 } from '../../types/beneficiary';
 import './BeneficiaryList.css';
+
+interface Article {
+    id: string;
+    articleName: string;
+    unitCost: number;
+}
+
+interface ArticleList {
+    status: string;
+    length: number;
+    data: Article[];
+}
 
 const BeneficiaryList: React.FC = () => {
     // Use the beneficiary form hook
     const {
         formData,
         setFormData,
-        loading: formLoading,
         error: formError,
         handleSubmit,
         resetForm,
@@ -88,7 +97,7 @@ const BeneficiaryList: React.FC = () => {
         label: category.categoryName
     }));
 
-    const articleOptions = articles.data.map(article => ({
+    const articleOptions = articles.data.map((article: Article) => ({
         value: article.id,
         label: article.articleName,
         unitCost: article.unitCost
@@ -318,23 +327,23 @@ const BeneficiaryList: React.FC = () => {
         }
     };
 
-    const handleDelete = async (id: string) => {
-        if (window.confirm('Are you sure you want to delete this record?')) {
-            try {
-                setLoading(true);
-                await axiosInstance.delete(`/beneficiarylist/${id}`);
-                // Optimistic update
-                // setRecentEntries(prev => prev.filter(entry => entry._id !== id));
-            } catch (error) {
-                setError('Failed to delete record');
-                console.error('Error deleting record:', error);
-                // Refresh the list in case of error
-                await fetchRecentEntries();
-            } finally {
-                setLoading(false);
-            }
-        }
-    };
+    // const handleDelete = async (id: string) => {
+    //     if (window.confirm('Are you sure you want to delete this record?')) {
+    //         try {
+    //             setLoading(true);
+    //             await axiosInstance.delete(`/beneficiarylist/${id}`);
+    //             // Optimistic update
+    //             // setRecentEntries(prev => prev.filter(entry => entry._id !== id));
+    //         } catch (error) {
+    //             setError('Failed to delete record');
+    //             console.error('Error deleting record:', error);
+    //             // Refresh the list in case of error
+    //             await fetchRecentEntries();
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     }
+    // };
 
     const renderForm = () => (
         <form onSubmit={handleSubmit} className="data-entry-form">
@@ -519,7 +528,7 @@ const BeneficiaryList: React.FC = () => {
                     <DataTable
                         data={recentEntries}
                         onEdit={handleEdit}
-                        onDelete={handleDelete}
+                        //onDelete={handleDelete}
                         hiddenColumns={['district', 'year', 'beneficiaryName', 'code', 'prefix', 'createdBy']}
                         columnOrder={[
                             'beneficiaryType',

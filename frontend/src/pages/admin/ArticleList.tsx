@@ -20,7 +20,7 @@ import {
     Text
 } from '@chakra-ui/react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
-import { axiosInstance } from '../../../config/config';
+import { axiosInstance } from '@/config/config';
 import ArticleForm from './ArticleForm';
 
 interface Article {

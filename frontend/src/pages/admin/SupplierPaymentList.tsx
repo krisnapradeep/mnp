@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, IconButton, useToast } from '@chakra-ui/react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
-import { axiosInstance } from '../../../config/config';
+import { axiosInstance } from '@/config/config';
 import SupplierPaymentForm from './SupplierPaymentForm';
 
 const SupplierPaymentList: React.FC = () => {
@@ -54,8 +54,16 @@ const SupplierPaymentList: React.FC = () => {
                             <Td>{payment.amount}</Td>
                             <Td>{payment.date}</Td>
                             <Td>
-                                <IconButton icon={<FiEdit2 />} onClick={() => { setSelectedSupplierPayment(payment); setFormVisible(true); }} />
-                                <IconButton icon={<FiTrash2 />} onClick={() => handleDelete(payment.supplierPaymentId)} />
+                                <IconButton 
+                                    aria-label="Edit supplier payment"
+                                    icon={<FiEdit2 />} 
+                                    onClick={() => { setSelectedSupplierPayment(payment); setFormVisible(true); }} 
+                                />
+                                <IconButton 
+                                    aria-label="Delete supplier payment"
+                                    icon={<FiTrash2 />} 
+                                    onClick={() => handleDelete(payment.supplierPaymentId)} 
+                                />
                             </Td>
                         </Tr>
                     ))}

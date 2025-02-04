@@ -1,4 +1,4 @@
-import React from 'react';
+//import React from 'react';
 import {
     Box,
     Grid,
@@ -6,7 +6,7 @@ import {
 } from '@chakra-ui/react';
 import {
     FiDollarSign,
-    FiUsers,
+    //FiUsers,
     FiShoppingBag,
     FiActivity,
     FiPackage,

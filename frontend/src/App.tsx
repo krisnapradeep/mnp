@@ -22,7 +22,7 @@ import BeneficiaryList from './pages/transaction/BeneficiaryList';
 // Components
 import Layout from './components/layout/Layout';
 
-function PrivateRouteWrapper({ children, path }: { children: React.ReactNode, path: string }) {
+function PrivateRouteWrapper({ children }: { children: React.ReactNode }) {
     const { user, isLoading } = useAuth();
 
     if (isLoading) {
@@ -48,7 +48,7 @@ function App() {
                         <Route
                             path="/admin/default"
                             element={
-                                <PrivateRouteWrapper path="/admin/default">
+                                <PrivateRouteWrapper>
                                     <Dashboard />
                                 </PrivateRouteWrapper>
                             }
@@ -57,7 +57,7 @@ function App() {
                         <Route
                             path="/admin/data-tables"
                             element={
-                                <PrivateRouteWrapper path="/admin/data-tables">
+                                <PrivateRouteWrapper>
                                     <DataTables />
                                 </PrivateRouteWrapper>
                             }
@@ -66,7 +66,7 @@ function App() {
                         <Route
                             path="/admin/profile"
                             element={
-                                <PrivateRouteWrapper path="/admin/profile">
+                                <PrivateRouteWrapper>
                                     <Profile />
                                 </PrivateRouteWrapper>
                             }
@@ -75,7 +75,7 @@ function App() {
                         <Route
                             path="/admin/user-types"
                             element={
-                                <PrivateRouteWrapper path="/admin/user-types">
+                                <PrivateRouteWrapper>
                                     <UserTypeList />
                                 </PrivateRouteWrapper>
                             }
@@ -83,7 +83,7 @@ function App() {
                         <Route
                             path="/admin/user-types/create"
                             element={
-                                <PrivateRouteWrapper path="/admin/user-types/create">
+                                <PrivateRouteWrapper>
                                     <UserTypeForm />
                                 </PrivateRouteWrapper>
                             }
@@ -92,29 +92,29 @@ function App() {
                         <Route
                             path="/admin/master-pages"
                             element={
-                                <PrivateRouteWrapper path="/admin/master-pages">
+                                <PrivateRouteWrapper>
                                     <Dashboard />
                                 </PrivateRouteWrapper>
                             }
                         />
-                        <Route path="/admin/year-master" element={<PrivateRouteWrapper path="/admin/year-master"><YearMaster /></PrivateRouteWrapper>} />
-                        <Route path="/admin/beneficiary-type" element={<PrivateRouteWrapper path="/admin/beneficiary-type"><BeneficiaryType /></PrivateRouteWrapper>} />
-                        <Route path="/admin/district" element={<PrivateRouteWrapper path="/admin/district"><District /></PrivateRouteWrapper>} />
-                        <Route path="/admin/category" element={<PrivateRouteWrapper path="/admin/category"><Category /></PrivateRouteWrapper>} />
-                        <Route path="/admin/supplier" element={<PrivateRouteWrapper path="/admin/supplier"><Supplier /></PrivateRouteWrapper>} />
-                        <Route path="/admin/supplier-payment" element={<PrivateRouteWrapper path="/admin/supplier-payment"><SupplierPayment /></PrivateRouteWrapper>} />
-                        <Route path="/admin/article-order" element={<PrivateRouteWrapper path="/admin/article-order"><ArticleOrder /></PrivateRouteWrapper>} />
+                        <Route path="/admin/year-master" element={<PrivateRouteWrapper><YearMaster /></PrivateRouteWrapper>} />
+                        <Route path="/admin/beneficiary-type" element={<PrivateRouteWrapper><BeneficiaryType /></PrivateRouteWrapper>} />
+                        <Route path="/admin/district" element={<PrivateRouteWrapper><District /></PrivateRouteWrapper>} />
+                        <Route path="/admin/category" element={<PrivateRouteWrapper><Category /></PrivateRouteWrapper>} />
+                        <Route path="/admin/supplier" element={<PrivateRouteWrapper><Supplier /></PrivateRouteWrapper>} />
+                        <Route path="/admin/supplier-payment" element={<PrivateRouteWrapper><SupplierPayment /></PrivateRouteWrapper>} />
+                        <Route path="/admin/article-order" element={<PrivateRouteWrapper><ArticleOrder /></PrivateRouteWrapper>} />
                         
                         <Route
                             path="/dashboard"
                             element={
-                                <PrivateRouteWrapper path="/dashboard">
+                                <PrivateRouteWrapper>
                                     <Dashboard />
                                 </PrivateRouteWrapper>
                             }
                         />
-                        <Route path="/master/user-types" element={<PrivateRouteWrapper path="/master/user-types"><UserTypeList /></PrivateRouteWrapper>} />
-                        <Route path="/transaction/beneficiary-list" element={<PrivateRouteWrapper path="/transaction/beneficiary-list"><BeneficiaryList /></PrivateRouteWrapper>} />
+                        <Route path="/master/user-types" element={<PrivateRouteWrapper><UserTypeList /></PrivateRouteWrapper>} />
+                        <Route path="/transaction/beneficiary-list" element={<PrivateRouteWrapper><BeneficiaryList /></PrivateRouteWrapper>} />
                         <Route
                             path="/"
                             element={<Navigate to="/auth/sign-in" replace />}

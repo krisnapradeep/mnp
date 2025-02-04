@@ -21,7 +21,7 @@ import {
     Flex
 } from '@chakra-ui/react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
-import { axiosInstance } from '../../../config/config';
+import { axiosInstance } from '@/config/config';
 import BeneficiaryForm from './BeneficiaryForm';
 
 interface Beneficiary {
