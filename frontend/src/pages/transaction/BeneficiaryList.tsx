@@ -175,7 +175,7 @@ const BeneficiaryList: React.FC = () => {
         }
     };
 
-    const handleArticleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleArticleChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
         const article = articles.data.find(a => a.id === event.target.value);
         if (article) {
             setFormData(prev => ({
@@ -184,6 +184,29 @@ const BeneficiaryList: React.FC = () => {
                 unitCost: article.unitCost,
                 totalCost: prev.quantity * article.unitCost
             }));
+
+            try {
+                // Check if beneficiary list exists for this article
+                const response = await axiosInstance.post('/beneficiarylist/check', {
+                    type: formData.type,
+                    articleId: article.id,
+                    districtId: formData.districtId ? formData.districtId : '',
+                    beneficiaryId: formData.beneficiaryId? formData.beneficiaryId : ''
+                });
+
+                if (response.data.status === 'success' && response.data.data.length > 0) {
+                    const existingBeneficiary = response.data.data[0];
+                    setFormData(prev => ({
+                        ...prev,
+                        mode: 'Edit',
+                        id: existingBeneficiary.id,
+                        quantity: existingBeneficiary.quantity,
+                        totalCost: existingBeneficiary.quantity * article.unitCost
+                    }));
+                }
+            } catch (error) {
+                console.error('Error checking beneficiary list:', error);
+            }
         }
     };
 

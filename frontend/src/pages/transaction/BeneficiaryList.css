@@ -147,6 +147,22 @@
     margin-bottom: 0.75rem;
 }
 
+/* Fixed width for Category and Article dropdowns */
+.form-group select#categoryId,
+.form-group select#articleId {
+    width: 100%;
+    max-width: clamp(200px, 25vw, 340px);
+    min-width: min(340px, 90vw);
+}
+
+/* Ensure dropdown options don't overflow */
+.form-group select#categoryId option,
+.form-group select#articleId option {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* Responsive Breakpoints */
 @media (max-width: 1024px) {
     .main-content {
