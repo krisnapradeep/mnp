@@ -16,7 +16,7 @@ interface AuthContextType {
     isLoading: boolean;
 }
 
-const API_URL = 'http://localhost:5005/api';
+const API_URL = process.env.API_BASE_URL || 'http://localhost:5005/api';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
